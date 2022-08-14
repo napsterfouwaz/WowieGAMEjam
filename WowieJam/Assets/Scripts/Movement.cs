@@ -124,14 +124,18 @@ public class Movement : MonoBehaviour
         {
             StartCoroutine(Wins());
         }
-        if (collision.gameObject.tag == "RespawnTile")
+       /* if (collision.gameObject.tag == "RespawnTile")
         {
             Player.transform.position = StartPos;
+<<<<<<< Updated upstream
         }
         if (collision.gameObject.tag == "Teleporter1")
         {
             Player.transform.position = GameObject.FindWithTag("Teleporter2").transform.position;
         }
+=======
+        }*/
+>>>>>>> Stashed changes
     }
 
     public void WasSoup()
