@@ -19,6 +19,11 @@ public class Movement : MonoBehaviour
     public BoxCollider2D Collid;
     public AudioClip win;
     bool CanLose = true;
+    public Sprite RightSprite;
+    public Sprite LeftSprite;
+    public Sprite UpSprite;
+    public Sprite DownSprite;
+    public SpriteRenderer sprren;
     // Start is called before the first frame update
     void Start()
     {
@@ -39,6 +44,7 @@ public class Movement : MonoBehaviour
         {
             if (CanMove == true)
             {
+                sprren.sprite = DownSprite;
                 CanMove = false;
                 Player.transform.position = new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z);
                 yield return new WaitForSeconds(0.5f);
@@ -50,6 +56,7 @@ public class Movement : MonoBehaviour
         {
             if (CanMove == true)
             {
+                sprren.sprite = RightSprite;
                 CanMove = false;
                 Player.transform.position = new Vector3(transform.position.x + 1f, transform.position.y, transform.position.z);
                 yield return new WaitForSeconds(0.5f);
@@ -62,6 +69,7 @@ public class Movement : MonoBehaviour
             if (CanMove == true)
             {
                 CanMove = false;
+                sprren.sprite = LeftSprite;
                 Player.transform.position = new Vector3(transform.position.x - 1f, transform.position.y, transform.position.z);
                 yield return new WaitForSeconds(0.5f);
                 CanMove = true;
@@ -73,6 +81,7 @@ public class Movement : MonoBehaviour
             if (CanMove == true)
             {
                 CanMove = false;
+                sprren.sprite = UpSprite;
                 Player.transform.position = new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z);
                 yield return new WaitForSeconds(0.5f);
                 CanMove = true;
@@ -114,6 +123,10 @@ public class Movement : MonoBehaviour
         if (collision.gameObject.tag == "WinTile")
         {
             StartCoroutine(Wins());
+        }
+        if (collision.gameObject.tag == "RespawnTile")
+        {
+            Player.transform.position = StartPos;
         }
     }
 
