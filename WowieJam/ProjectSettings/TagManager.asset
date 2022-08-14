@@ -7,6 +7,8 @@ TagManager:
   - ForwardDirection
   - LeftDirection
   - RightDirection
+  - Wall
+  - DownDirection
   layers:
   - Default
   - TransparentFX
