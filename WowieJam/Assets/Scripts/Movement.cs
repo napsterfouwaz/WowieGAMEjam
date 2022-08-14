@@ -11,6 +11,14 @@ public class Movement : MonoBehaviour
     public Animator animes;
     Vector3 StartPos;
     public GameObject Image;
+    public AudioClip Dies;
+    public AudioClip Change;
+    public AudioClip Teleport;
+    public AudioClip Walk;
+    public AudioSource yes;
+    public BoxCollider2D Collid;
+    public AudioClip win;
+    bool CanLose = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,11 +28,13 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-
+        
     }
 
     public IEnumerator Walk1Step()
     {
+        Collid.enabled = true;
+        yes.PlayOneShot(Walk);
         if (Direction == 1)
         {
             if (CanMove == true)
@@ -77,23 +87,33 @@ public class Movement : MonoBehaviour
         if (collision.gameObject.tag == "RightDirection")
         {
             Direction = 2;
+            yes.PlayOneShot(Change);
         }
         if (collision.gameObject.tag == "LeftDirection")
         {
+            yes.PlayOneShot(Change);
             Direction = 3;
         }
         if (collision.gameObject.tag == "ForwardDirection")
         {
+            yes.PlayOneShot(Change);
             Direction = 1;
         }
         if (collision.gameObject.tag == "DownDirection")
         {
+            yes.PlayOneShot(Change);
             Direction = 4;
         }
         if (collision.gameObject.tag == "Wall")
         {
-            Player.transform.position = StartPos;
-            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+            if (CanLose == true)
+            {
+                StartCoroutine(Die());
+            }
+        }
+        if (collision.gameObject.tag == "WinTile")
+        {
+            StartCoroutine(Wins());
         }
     }
 
@@ -104,9 +124,25 @@ public class Movement : MonoBehaviour
 
     public IEnumerator Die()
     {
+        CanMove = false;
+        Collid.enabled = false;
+        yes.PlayOneShot(Dies);
         Image.SetActive(true);
         animes.SetTrigger("Fade");
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+    }
+
+    public IEnumerator Wins()
+    {
+        Player.GetComponent<SpriteRenderer>().enabled = false;
+        CanLose = false;
+        CanMove = false;
+        Collid.enabled = false;
+        yes.PlayOneShot(win);
+        Image.SetActive(true);
+        animes.SetTrigger("Fade");
+        yield return new WaitForSeconds(2f);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
     }
 }

@@ -9,6 +9,7 @@ TagManager:
   - RightDirection
   - Wall
   - DownDirection
+  - WinTile
   layers:
   - Default
   - TransparentFX
