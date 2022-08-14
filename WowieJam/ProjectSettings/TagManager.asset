@@ -10,6 +10,7 @@ TagManager:
   - Wall
   - DownDirection
   - WinTile
+  - RespawnTile
   layers:
   - Default
   - TransparentFX
