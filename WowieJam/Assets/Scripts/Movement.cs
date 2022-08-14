@@ -128,6 +128,10 @@ public class Movement : MonoBehaviour
         {
             Player.transform.position = StartPos;
         }
+        if (collision.gameObject.tag == "Teleporter1")
+        {
+            Player.transform.position = GameObject.FindWithTag("Teleporter2").transform.position;
+        }
     }
 
     public void WasSoup()
