@@ -7,7 +7,7 @@ public class snapcontroller : MonoBehaviour
     public List<Transform> snapPoints;
     public List<draggable> draggableObjects;
     public float snapRange = 0.5f;
-    bool snapped = false;
+  
 
 
     private void Start()
@@ -38,7 +38,7 @@ public class snapcontroller : MonoBehaviour
             if (closestSnapPoint != null && closestDistance <= snapRange)
             {
                 drag.transform.localPosition = closestSnapPoint.localPosition;
-                snapped = true; 
+               
 
             }
 
