@@ -6,7 +6,9 @@ using UnityEngine.SceneManagement;
 public class Movement : MonoBehaviour
 {
     public GameObject Player;
-    public int Direction = 1;
+    public GameObject Bt;
+    public GameObject Portal;
+    public int Direction = 2;
     bool CanMove = true;
     public Animator animes;
     Vector3 StartPos;
@@ -33,7 +35,7 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
 
     public IEnumerator Walk1Step()
@@ -124,18 +126,18 @@ public class Movement : MonoBehaviour
         {
             StartCoroutine(Wins());
         }
-       /* if (collision.gameObject.tag == "RespawnTile")
-        {
-            Player.transform.position = StartPos;
-<<<<<<< Updated upstream
-        }
         if (collision.gameObject.tag == "Teleporter1")
         {
-            Player.transform.position = GameObject.FindWithTag("Teleporter2").transform.position;
+            Player.transform.position = new Vector2(Portal.transform.position.x, Portal.transform.position.y);
+            //Player.transform.position = StartPos;
         }
-=======
-        }*/
->>>>>>> Stashed changes
+
+        if(collision.gameObject.tag == "Button")
+        {
+            Bt.gameObject.SetActive(false);
+
+        }
+
     }
 
     public void WasSoup()

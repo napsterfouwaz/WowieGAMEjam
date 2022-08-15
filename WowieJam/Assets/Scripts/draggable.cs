@@ -10,6 +10,10 @@ public class draggable : MonoBehaviour
     private bool isDragged = false;
     private Vector3 mouseDragStartPosition;
     private Vector3 spriteDragStartPosition;
+   
+  
+
+
 
     private void OnMouseDown()
     {
@@ -24,11 +28,8 @@ public class draggable : MonoBehaviour
         if (isDragged)
         {
             transform.localPosition = spriteDragStartPosition + (Camera.main.ScreenToWorldPoint(Input.mousePosition) - mouseDragStartPosition);
-
         }
-
     }
-
 
     private void OnMouseUp()
     {
@@ -37,5 +38,5 @@ public class draggable : MonoBehaviour
     }
 
 
-
+    
 }

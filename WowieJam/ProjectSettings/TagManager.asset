@@ -13,6 +13,7 @@ TagManager:
   - RespawnTile
   - Teleporter1
   - Teleporter2
+  - Button
   layers:
   - Default
   - TransparentFX
