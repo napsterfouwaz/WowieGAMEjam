@@ -26,6 +26,7 @@ public class Movement : MonoBehaviour
     public Sprite UpSprite;
     public Sprite DownSprite;
     public SpriteRenderer sprren;
+    bool CanReallyMove = true;
     // Start is called before the first frame update
     void Start()
     {
@@ -40,54 +41,57 @@ public class Movement : MonoBehaviour
 
     public IEnumerator Walk1Step()
     {
-        Collid.enabled = true;
-        yes.PlayOneShot(Walk);
-        if (Direction == 1)
+        if (CanReallyMove == true)
         {
-            if (CanMove == true)
+            Collid.enabled = true;
+            yes.PlayOneShot(Walk);
+            if (Direction == 1)
             {
-                sprren.sprite = DownSprite;
-                CanMove = false;
-                Player.transform.position = new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z);
-                yield return new WaitForSeconds(0.5f);
-                CanMove = true;
-                StartCoroutine(Walk1Step());
+                if (CanMove == true)
+                {
+                    sprren.sprite = DownSprite;
+                    CanMove = false;
+                    Player.transform.position = new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z);
+                    yield return new WaitForSeconds(0.5f);
+                    CanMove = true;
+                    StartCoroutine(Walk1Step());
+                }
             }
-        }
-        if (Direction == 2)
-        {
-            if (CanMove == true)
+            if (Direction == 2)
             {
-                sprren.sprite = RightSprite;
-                CanMove = false;
-                Player.transform.position = new Vector3(transform.position.x + 1f, transform.position.y, transform.position.z);
-                yield return new WaitForSeconds(0.5f);
-                CanMove = true;
-                StartCoroutine(Walk1Step());
+                if (CanMove == true)
+                {
+                    sprren.sprite = RightSprite;
+                    CanMove = false;
+                    Player.transform.position = new Vector3(transform.position.x + 1f, transform.position.y, transform.position.z);
+                    yield return new WaitForSeconds(0.5f);
+                    CanMove = true;
+                    StartCoroutine(Walk1Step());
+                }
             }
-        }
-        if (Direction == 3)
-        {
-            if (CanMove == true)
+            if (Direction == 3)
             {
-                CanMove = false;
-                sprren.sprite = LeftSprite;
-                Player.transform.position = new Vector3(transform.position.x - 1f, transform.position.y, transform.position.z);
-                yield return new WaitForSeconds(0.5f);
-                CanMove = true;
-                StartCoroutine(Walk1Step());
+                if (CanMove == true)
+                {
+                    CanMove = false;
+                    sprren.sprite = LeftSprite;
+                    Player.transform.position = new Vector3(transform.position.x - 1f, transform.position.y, transform.position.z);
+                    yield return new WaitForSeconds(0.5f);
+                    CanMove = true;
+                    StartCoroutine(Walk1Step());
+                }
             }
-        }
-        if (Direction == 4)
-        {
-            if (CanMove == true)
+            if (Direction == 4)
             {
-                CanMove = false;
-                sprren.sprite = UpSprite;
-                Player.transform.position = new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z);
-                yield return new WaitForSeconds(0.5f);
-                CanMove = true;
-                StartCoroutine(Walk1Step());
+                if (CanMove == true)
+                {
+                    CanMove = false;
+                    sprren.sprite = UpSprite;
+                    Player.transform.position = new Vector3(transform.position.x, transform.position.y + 1f, transform.position.z);
+                    yield return new WaitForSeconds(0.5f);
+                    CanMove = true;
+                    StartCoroutine(Walk1Step());
+                }
             }
         }
     }
@@ -128,11 +132,10 @@ public class Movement : MonoBehaviour
         }
         if (collision.gameObject.tag == "Teleporter1")
         {
-            Player.transform.position = new Vector2(Portal.transform.position.x, Portal.transform.position.y);
-            //Player.transform.position = StartPos;
+            StartCoroutine(Teleportedddd());
         }
 
-        if(collision.gameObject.tag == "Button")
+        if (collision.gameObject.tag == "Button")
         {
             Bt.gameObject.SetActive(false);
 
@@ -147,6 +150,7 @@ public class Movement : MonoBehaviour
 
     public IEnumerator Die()
     {
+        CanReallyMove = false;
         CanMove = false;
         Collid.enabled = false;
         yes.PlayOneShot(Dies);
@@ -158,6 +162,7 @@ public class Movement : MonoBehaviour
 
     public IEnumerator Wins()
     {
+        CanReallyMove = false;
         Player.GetComponent<SpriteRenderer>().enabled = false;
         CanLose = false;
         CanMove = false;
@@ -167,5 +172,17 @@ public class Movement : MonoBehaviour
         animes.SetTrigger("Fade");
         yield return new WaitForSeconds(2f);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
+    }
+
+    public IEnumerator Teleportedddd()
+    {
+        CanReallyMove = false;
+        yes.PlayOneShot(Teleport);
+        yield return new WaitForSeconds(0.7f);
+        Player.transform.position = GameObject.FindWithTag("Teleporter2").transform.position;
+        yield return new WaitForSeconds(0.5f);
+        CanReallyMove = true;
+        StopAllCoroutines();
+        StartCoroutine(Walk1Step());
     }
 }
