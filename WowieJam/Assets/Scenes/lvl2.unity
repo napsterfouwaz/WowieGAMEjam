@@ -5472,7 +5472,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
+      - m_Target: {fileID: 923583163}
         m_TargetAssemblyTypeName: Movement, Assembly-CSharp
         m_MethodName: WasSoup
         m_Mode: 1
